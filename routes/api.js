@@ -63,4 +63,26 @@ router.delete('/users/:id', (req, res) => {
 
 });
 
+router.post('/users', (req, res) => {
+    const name = req.body.name || '';
+
+    if (!name.length) {
+        res.status(400).json({error: 'Incorrect name'});
+    }
+
+    const id = users.reduce((maxId, user) => {
+        return user.id > maxId ? user.id : maxId
+    }, 0) + 1;
+
+    const newUser = {
+        id: id,
+        name: name
+    };
+
+    users.push(newUser);
+
+    return res.status(201).json(newUser);
+    // return res.status(201);
+});
+
 module.exports = router;

@@ -11,7 +11,7 @@ var apiRouter = require('./routes/api');
 var app = express();
 
 // view engine setup
-app.use(express.static(__dirname + "/dist/"));
+app.use(express.static(__dirname + "/views/"));
 
 app.use(logger('dev'));
 app.use(express.json());

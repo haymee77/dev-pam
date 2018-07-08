@@ -1,6 +1,3 @@
-var express = require('express');
-var router = express.Router();
-
 // api test
 let users = [
     {
@@ -13,16 +10,15 @@ let users = [
     },
     {
         id: 3,
-        name: 'Pheebe'
+        name: 'Pheebe2'
     }
 ];
 
-/* GET users listing. */
-router.get('/users', (req, res) => {
+exports.index = (req, res) => {
     return res.json(users);
-});
+};
 
-router.get('/users/:id', (req, res) => {
+exports.show = (req, res) => {
   
     const id = parseInt(req.params.id, 10);
 
@@ -40,9 +36,9 @@ router.get('/users/:id', (req, res) => {
 
     return res.json(user[0]);
   
-});
+};
 
-router.delete('/users/:id', (req, res) => {
+exports.destroy = (req, res) => {
 
     const id = parseInt(req.params.id, 10);
 
@@ -61,9 +57,9 @@ router.delete('/users/:id', (req, res) => {
     users.splice(userIdx, 1);
     return res.status(204).send();
 
-});
+};
 
-router.post('/users', (req, res) => {
+exports.create = (req, res) => {
     const name = req.body.name || '';
 
     if (!name.length) {
@@ -83,6 +79,4 @@ router.post('/users', (req, res) => {
 
     return res.status(201).json(newUser);
     // return res.status(201);
-});
-
-module.exports = router;
+};

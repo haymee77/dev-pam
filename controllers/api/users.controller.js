@@ -1,21 +1,9 @@
 // api test
-let users = [
-    {
-        id: 1,
-        name: 'Rachel'
-    },
-    {
-        id: 2,
-        name: 'Monica'
-    },
-    {
-        id: 3,
-        name: 'Pheebe2'
-    }
-];
+const models = require('../../models');
 
 exports.index = (req, res) => {
-    return res.json(users);
+    models.User.findAll()
+        .then(users => res.json(users));
 };
 
 exports.show = (req, res) => {
@@ -26,15 +14,17 @@ exports.show = (req, res) => {
         return res.status(400).json({error: 'Incorrect id'});
     }
 
-    let user = users.filter(user => {
-        return user.id === id;
+    models.User.findOne({
+        where: {
+            id: id
+        }
+    }).then(user => {
+        if (!user) {
+            return res.status(404).json({errro: 'Unknown user'});    
+        }
+
+        return res.json(user);
     });
-
-    if (!user[0]) {
-        return res.status(404).json({errro: 'Unknown user'});
-    }
-
-    return res.json(user[0]);
   
 };
 
@@ -46,16 +36,11 @@ exports.destroy = (req, res) => {
         return res.status(400).json({error: 'Incorrect id'});
     }
 
-    const userIdx = users.findIndex(user => {
-        return user.id === id;
-    });
-
-    if (userIdx === -1) {
-        return res.status(404).json({errro: 'Unknown user'});
-    }
-
-    users.splice(userIdx, 1);
-    return res.status(204).send();
+    models.User.destroy({
+        where: {
+            id: id
+        }
+    }).then(() => res.status(204).send());
 
 };
 
@@ -66,17 +51,34 @@ exports.create = (req, res) => {
         res.status(400).json({error: 'Incorrect name'});
     }
 
-    const id = users.reduce((maxId, user) => {
-        return user.id > maxId ? user.id : maxId
-    }, 0) + 1;
-
-    const newUser = {
-        id: id,
+    models.User.create({
         name: name
-    };
+    }).then((user) => res.status(201).json(user))
 
-    users.push(newUser);
-
-    return res.status(201).json(newUser);
-    // return res.status(201);
 };
+
+exports.update = (req, res) => {
+
+    const id = parseInt(req.params.id, 10);
+    const name = req.body.name || '';
+
+    console.log("update--");
+    console.log(id);
+    console.log(name);
+
+    if (!id) {
+        return res.status(400).json({error: 'Incorrect id'});
+    }
+
+    if (!name.length) {
+        return res.status(400).json({error: 'Incorrect name'});
+    }
+
+    models.User.update({
+        name: name
+    }, {
+        where: {
+            id: id
+        }
+    }).then((user) => res.status(201).json(user))
+}

@@ -6,7 +6,11 @@ const sequelize = new Sequelize('PAM', 'api', 'clxhtm&5298', {
 
 const User = sequelize.define('USERS', {
     name: Sequelize.STRING
+}, {
+    freezeTableName: true
 });
 
-module.exports = sequelize;
-module.exports = User;
+module.exports = {
+    sequelize: sequelize,
+    User: User
+}

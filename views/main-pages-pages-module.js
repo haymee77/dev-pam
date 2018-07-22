@@ -826,7 +826,7 @@ var Login2Module = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"login\" fxLayout=\"column\">\n\n    <div id=\"login-form-wrapper\" fxLayout=\"column\" fxLayoutAlign=\"center center\">\n\n        <div id=\"login-form\" [@animate]=\"{value:'*',params:{duration:'300ms',y:'100px'}}\">\n\n            <div class=\"logo\">\n                <img src=\"assets/images/logos/fuse.svg\">\n            </div>\n\n            <div class=\"title\">LOGIN TO YOUR ACCOUNT</div>\n\n            <form name=\"loginForm\" [formGroup]=\"loginForm\" novalidate>\n\n                <mat-form-field>\n                    <input matInput placeholder=\"Email\" formControlName=\"email\">\n                    <mat-error *ngIf=\"loginFormErrors.email.required\">\n                        Email is required\n                    </mat-error>\n                    <mat-error *ngIf=\"!loginFormErrors.email.required && loginFormErrors.email.email\">\n                        Please enter a valid email address\n                    </mat-error>\n                </mat-form-field>\n\n                <mat-form-field>\n                    <input matInput type=\"password\" placeholder=\"Password\" formControlName=\"password\">\n                    <mat-error *ngIf=\"loginFormErrors.password.required\">\n                        Password is required\n                    </mat-error>\n                </mat-form-field>\n\n                <div class=\"remember-forgot-password\" fxLayout=\"row\" fxLayout.xs=\"column\"\n                     fxLayoutAlign=\"space-between center\">\n                    <mat-checkbox class=\"remember-me\" aria-label=\"Remember Me\">\n                        Remember Me\n                    </mat-checkbox>\n\n                    <a class=\"forgot-password\" [routerLink]=\"'/pages/auth/forgot-password'\">\n                        Forgot Password?\n                    </a>\n                </div>\n\n                <button mat-raised-button color=\"accent\" class=\"submit-button\" aria-label=\"LOG IN\"\n                        [disabled]=\"loginForm.invalid\">\n                    LOGIN\n                </button>\n\n            </form>\n\n            <div class=\"separator\">\n                <span class=\"text\">OR</span>\n            </div>\n\n            <button mat-raised-button class=\"google\">\n                Log in with Google\n            </button>\n\n            <button mat-raised-button class=\"facebook\">\n                Log in with Facebook\n            </button>\n\n            <div class=\"register\" fxLayout=\"column\" fxLayoutAlign=\"center center\">\n                <span class=\"text\">Don't have an account?</span>\n                <a class=\"link\" [routerLink]=\"'/pages/auth/register'\">Create an account</a>\n            </div>\n\n        </div>\n\n    </div>\n\n</div>"
+module.exports = "<div id=\"login\" fxLayout=\"column\">\n\n    <div id=\"login-form-wrapper\" fxLayout=\"column\" fxLayoutAlign=\"center center\">\n\n        <div id=\"login-form\" [@animate]=\"{value:'*',params:{duration:'300ms',y:'100px'}}\">\n\n            <div class=\"logo\">\n                <img src=\"assets/images/logos/fuse.svg\">\n            </div>\n\n            <div class=\"title\">LOGIN TO YOUR ACCOUNT</div>\n\n            <form name=\"loginForm\" [formGroup]=\"loginForm\" novalidate (ngSubmit)=\"onFormSubmit(loginForm.value)\">\n\n                <mat-form-field>\n                    <input matInput placeholder=\"Email\" formControlName=\"email\">\n                    <mat-error *ngIf=\"loginFormErrors.email.required\">\n                        Email is required\n                    </mat-error>\n                    <mat-error *ngIf=\"!loginFormErrors.email.required && loginFormErrors.email.email\">\n                        Please enter a valid email address\n                    </mat-error>\n                </mat-form-field>\n\n                <mat-form-field>\n                    <input matInput type=\"password\" placeholder=\"Password\" formControlName=\"password\">\n                    <mat-error *ngIf=\"loginFormErrors.password.required\">\n                        Password is required\n                    </mat-error>\n                </mat-form-field>\n\n                <div class=\"remember-forgot-password\" fxLayout=\"row\" fxLayout.xs=\"column\"\n                     fxLayoutAlign=\"space-between center\">\n                    <mat-checkbox class=\"remember-me\" aria-label=\"Remember Me\">\n                        Remember Me\n                    </mat-checkbox>\n\n                    <a class=\"forgot-password\" [routerLink]=\"'/pages/auth/forgot-password'\">\n                        Forgot Password?\n                    </a>\n                </div>\n\n                <button mat-raised-button color=\"accent\" class=\"submit-button\" aria-label=\"LOG IN\"\n                        [disabled]=\"loginForm.invalid\">\n                    LOGIN\n                </button>\n\n            </form>\n\n            <div class=\"separator\">\n                <span class=\"text\">OR</span>\n            </div>\n\n            <button mat-raised-button class=\"google\">\n                Log in with Google\n            </button>\n\n            <button mat-raised-button class=\"facebook\">\n                Log in with Facebook\n            </button>\n\n            <div class=\"register\" fxLayout=\"column\" fxLayoutAlign=\"center center\">\n                <span class=\"text\">Don't have an account?</span>\n                <a class=\"link\" [routerLink]=\"'/pages/auth/register'\">Create an account</a>\n            </div>\n\n        </div>\n\n    </div>\n\n</div>"
 
 /***/ }),
 
@@ -857,6 +857,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 /* harmony import */ var _fuse_services_config_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fuse/services/config.service */ "./src/@fuse/services/config.service.ts");
 /* harmony import */ var _fuse_animations__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fuse/animations */ "./src/@fuse/animations/index.ts");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -872,16 +873,19 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var LoginComponent = /** @class */ (function () {
     /**
      * Constructor
      *
      * @param {FuseConfigService} _fuseConfigService
      * @param {FormBuilder} _formBuilder
+     * @param {_httpCliend} _httpClient
      */
-    function LoginComponent(_fuseConfigService, _formBuilder) {
+    function LoginComponent(_fuseConfigService, _formBuilder, _httpClient) {
         this._fuseConfigService = _fuseConfigService;
         this._formBuilder = _formBuilder;
+        this._httpClient = _httpClient;
         // Configure the layout
         this._fuseConfigService.config = {
             layout: {
@@ -913,8 +917,8 @@ var LoginComponent = /** @class */ (function () {
     LoginComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.loginForm = this._formBuilder.group({
-            email: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].email]],
-            password: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]
+            email: ["", [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].email]],
+            password: ["", _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]
         });
         this.loginForm.valueChanges
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(this._unsubscribeAll))
@@ -950,15 +954,24 @@ var LoginComponent = /** @class */ (function () {
             }
         }
     };
+    LoginComponent.prototype.onFormSubmit = function (formValue) {
+        // alert(JSON.stringify(formValue, null, 2));
+        this._httpClient.post('/api/users/', { name: formValue.email })
+            .subscribe(function (response) {
+            alert('회원 추가완료');
+        });
+        // console.log(JSON.stringify(formValue.email, null, 2));
+    };
     LoginComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'login',
+            selector: "login",
             template: __webpack_require__(/*! ./login.component.html */ "./src/app/main/pages/authentication/login/login.component.html"),
             styles: [__webpack_require__(/*! ./login.component.scss */ "./src/app/main/pages/authentication/login/login.component.scss")],
             animations: _fuse_animations__WEBPACK_IMPORTED_MODULE_5__["fuseAnimations"]
         }),
         __metadata("design:paramtypes", [_fuse_services_config_service__WEBPACK_IMPORTED_MODULE_4__["FuseConfigService"],
-            _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"]])
+            _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"],
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_6__["HttpClient"]])
     ], LoginComponent);
     return LoginComponent;
 }());

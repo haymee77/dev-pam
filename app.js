@@ -12,6 +12,7 @@ var app = express();
 
 // view engine setup
 app.use(express.static(__dirname + "/views/"));
+// app.get('/*', (req, res) => res.sendFile(path.join(__dirname)));
 
 app.use(logger('dev'));
 app.use(express.json());

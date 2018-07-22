@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -6,7 +8,7 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 
 var indexRouter = require('./routes/index');
-var apiRouter = require('./routes/api');
+var apiRouter = require('./routes/api/api');
 
 var app = express();
 

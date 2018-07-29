@@ -3,11 +3,18 @@ const request = require('supertest');
 const app = require('../app');
 
 describe('PUT /api/users/:id', () => {
+    before('sync database', () => {
+        require('../models/models').sequelize.sync({force: false}).then(() => {
+            console.log("sync success");
+            console.log("env: " + process.env.NODE_ENV);
+        });
+    });
+
     it.only('should return 200 status code', (done) => {
         request(app)
             .put('/api/users/4')
             .send({
-                name: 'Mcka'
+                name: 'Mcka2'
             })
             .end((err, res) => {
                 if (err) throw err;

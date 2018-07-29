@@ -3,7 +3,9 @@ const env = {
         mysql: {
             username: 'api_dev',
             password: 'clxhtm&5298',
-            database: 'PAM_DEV'
+            database: 'PAM_DEV',
+            host: '13.125.246.193',
+            dialect: 'mysql'
         }
     },
 
@@ -11,7 +13,9 @@ const env = {
         mysql: {
             username: 'api_test',
             password: 'clxhtm&5298',
-            database: 'PAM_TEST'
+            database: 'PAM_TEST',
+            host: '13.125.246.193',
+            dialect: 'mysql'
         }
     },
 
@@ -19,7 +23,9 @@ const env = {
         mysql: {
             username: 'api',
             password: 'clxhtm&5298',
-            database: 'PAM'
+            database: 'PAM',
+            host: '13.125.246.193',
+            dialect: 'mysql'
         }
     }
 }

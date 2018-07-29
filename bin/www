@@ -29,7 +29,6 @@ server.listen(port, () => {
     // models 의 명세에 맞춰 DB 와 sync 함.
     require('../models').sequelize.sync({force: false}).then(() => {
         console.log("sync success");
-        console.log("env: " + process.env.NODE_ENV);
     });
 });
 

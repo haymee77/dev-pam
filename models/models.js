@@ -14,7 +14,9 @@ const sequelize = new Sequelize(
 const User = sequelize.define('USERS', {
     name: Sequelize.STRING
 }, {
-    freezeTableName: true
+    freezeTableName: true,
+    createdAt: 'created_dt',
+    updatedAt: 'updated_dt'
 });
 
 module.exports = {

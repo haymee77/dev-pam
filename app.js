@@ -7,8 +7,11 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 
-var indexRouter = require('./routes/index');
+// API router
 var apiRouter = require('./routes/api/api');
+
+// Dev-test router
+var devRouter = require('./routes/dev');
 
 var app = express();
 
@@ -32,8 +35,8 @@ app.get("/*", function(req, res) { // Router => Angular (Front-end)
   });
 });
 
-// app.use('/', indexRouter);
 app.use('/api', apiRouter);
+app.use('/_dev', devRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

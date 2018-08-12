@@ -10,7 +10,7 @@
 
             <div class="title">LOGIN TO YOUR ACCOUNT</div>
 
-            <form name="loginForm" [formGroup]="loginForm" novalidate (ngSubmit)="onFormSubmit(loginForm.value)">
+            <!-- <form name="loginForm" [formGroup]="loginForm" novalidate (ngSubmit)="onFormSubmit(loginForm.value)">
 
                 <mat-form-field>
                     <input matInput placeholder="Email" formControlName="email">
@@ -45,19 +45,22 @@
                     LOGIN
                 </button>
 
-            </form>
+            </form> -->
 
-            <div class="separator">
+            <!-- <div class="separator">
                 <span class="text">OR</span>
-            </div>
+            </div> -->
 
-            <button mat-raised-button class="google">
+            <!-- <button mat-raised-button class="google">
                 Log in with Google
             </button>
 
             <button mat-raised-button class="facebook">
                 Log in with Facebook
-            </button>
+            </button> -->
+            <a href="https://kauth.kakao.com/oauth/authorize?client_id={{app_key}}&redirect_uri={{redirect_uri}}&response_type=code">
+                <img src="https://developers.kakao.com/assets/img/about/logos/login/kr/kakao_account_login_btn_large_wide.png" />
+            </a>
 
             <div class="register" fxLayout="column" fxLayoutAlign="center center">
                 <span class="text">Don't have an account?</span>

@@ -35,6 +35,10 @@ app.get("/*", function(req, res) { // Router => Angular (Front-end)
   });
 });
 
+app.get('/pages/auth/login', function(req, res) {
+  res.end('1111');
+});
+
 app.use('/api', apiRouter);
 app.use('/_dev', devRouter);
 

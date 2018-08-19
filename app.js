@@ -27,6 +27,9 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended : true }));
 
+app.use('/api', apiRouter);
+app.use('/_dev', devRouter);
+
 app.get("/*", function(req, res) { // Router => Angular (Front-end)
   res.sendFile(path.join(__dirname, "views/index.html"), function(err) {
     if (err) {
@@ -34,9 +37,6 @@ app.get("/*", function(req, res) { // Router => Angular (Front-end)
     }
   });
 });
-
-app.use('/api', apiRouter);
-app.use('/_dev', devRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

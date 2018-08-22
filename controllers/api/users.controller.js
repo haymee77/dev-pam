@@ -1,5 +1,5 @@
 // api test
-const models = require('../../models/models');
+const models = require('../../models');
 
 exports.index = (req, res) => {
     models.User.findAll()

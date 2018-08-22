@@ -7,13 +7,19 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 
-// API router
+// router
 var apiRouter = require('./routes/api/api');
-
-// Dev-test router
 var devRouter = require('./routes/dev');
 
+const { sequelize } = require('./models');
+
 var app = express();
+sequelize.sync();
+
+// models 의 명세에 맞춰 DB 와 sync 함.
+// require('../models/models').sequelize.sync({force: false}).then(() => {
+//   console.log("sync success");
+// });
 
 // view engine setup
 app.use(express.static(__dirname + "/views/"));

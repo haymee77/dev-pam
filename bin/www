@@ -26,10 +26,7 @@ var server = http.createServer(app);
  */
 
 server.listen(port, () => {
-    // models 의 명세에 맞춰 DB 와 sync 함.
-    require('../models/models').sequelize.sync({force: false}).then(() => {
-        console.log("sync success");
-    });
+  console.log(`${port}번 포트에서 서비스 시작`);
 });
 
 server.on('error', onError);

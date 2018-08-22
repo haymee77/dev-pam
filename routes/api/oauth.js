@@ -1,6 +1,46 @@
 const express = require('express');
 const router = express.Router();
 const request = require('request');
+const passport = require('passport');
+const KakaoStrategy = require('passport-kakao').Strategy;
+
+const clientID = "a0abd437b44cfdbb646ee7805def69e8";
+const callbackURL = "/api/auth/kakao/";
+
+// [카카오톡 로그인 요청]
+router.get('/login-kakao/', passport.authenticate('login-kakao'));
+
+// [카카오톡-passport] 처리
+passport.use('login-kakao', new KakaoStrategy({
+        clientID: clientID,
+        callbackURL: callbackURL
+    },
+    function(accessToken, refreshToken, profile, done) {
+        console.log(profile);
+        return done(null, profile);
+    }
+));
+
+// [카카오톡-passport callbackURL] 처리
+router.get('/kakao/', passport.authenticate('login-kakao', {
+    successRedirect: '/kakao/success/',
+    failureRedirect: '/kakao/failed/'
+}, (req, res) => {
+    console.log('callback from kakao');
+    console.log(req);
+}));
+
+// [카카오톡-passport callback] 처리
+router.get('/kakao/success/', (req, res) => {
+    res.send('kakao success');
+});
+
+router.get('/kakao/failed/', (req, res) => {
+    res.send('kakao failed');
+});
+
+
+/*
 
 // [카카오톡]토큰으로 사용자 정보 받아오기
 router.get('/kakao-user/', (req, res) => {
@@ -91,10 +131,6 @@ router.get('/kakao/', (req, res) => {
             if (!err && response.statusCode == 200) {
                 console.log("success?");
 
-                /**
-                 * body
-                 * access_token, token_type, refresh_token, expires_in, scope
-                 */
                 const token_info = JSON.parse(body);
 
                 console.log("access_token: " + token_info.access_token);
@@ -114,6 +150,8 @@ router.get('/kakao/', (req, res) => {
     }
 
 });
+
+*/
 
 module.exports = router;
 

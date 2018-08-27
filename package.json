@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "start-dev": "nodemon ./bin/www",
     "ng-start": "ng serve --open",
     "start": "node ./bin/www",
     "ng": "ng",
@@ -71,6 +72,7 @@
     "passport-naver": "^1.0.6",
     "perfect-scrollbar": "1.4.0",
     "prismjs": "1.14.0",
+    "pug": "2.0.3",
     "request": "2.88.0",
     "rxjs": "6.2.1",
     "rxjs-compat": "6.2.1",

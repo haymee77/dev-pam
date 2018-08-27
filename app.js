@@ -1,31 +1,28 @@
 #!/usr/bin/env node
 
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var bodyParser = require('body-parser');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const bodyParser = require('body-parser');
+const pug = require('pug');
 
 // router
-var apiRouter = require('./routes/api/api');
-var devRouter = require('./routes/dev');
+const apiRouter = require('./routes/api/api');
+const devRouter = require('./routes/dev');
 
 const { sequelize } = require('./models');
 
-var app = express();
+const app = express();
 sequelize.sync();
-
-// models 의 명세에 맞춰 DB 와 sync 함.
-// require('../models/models').sequelize.sync({force: false}).then(() => {
-//   console.log("sync success");
-// });
 
 // view engine setup
 app.use(express.static(__dirname + "/views/"));
-// app.get('/*', (req, res) => res.sendFile(path.join(__dirname)));
+app.set('view engine', 'pug');
 
 app.use(logger('dev'));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

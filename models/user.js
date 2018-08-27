@@ -1,4 +1,4 @@
-module.exports = (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => (
     sequelize.define('USERS', {
         name: {
             type: DataTypes.STRING(40),
@@ -10,6 +10,6 @@ module.exports = (sequelize, DataTypes) => {
         createdAt: 'created_dt',
         updatedAt: 'updated_dt',
         timestamp: true,
-        paranoid: true,    
+        paranoid: true, // 삭제일(복구용)    
     })
-}
+);

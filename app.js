@@ -18,7 +18,7 @@ const { sequelize } = require('./models');
 const passportConfig = require('./passport');
 
 const app = express();
-sequelize.sync();
+sequelize.sync({force:true});
 passportConfig(passport);
 
 // view engine setup

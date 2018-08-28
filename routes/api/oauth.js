@@ -1,42 +1,28 @@
 const express = require('express');
-const router = express.Router();
-const request = require('request');
 const passport = require('passport');
-const KakaoStrategy = require('passport-kakao').Strategy;
-
-const clientID = "a0abd437b44cfdbb646ee7805def69e8";
-const callbackURL = "/api/auth/kakao/";
+const router = express.Router();
 
 // [카카오톡 로그인 요청]
-router.get('/login-kakao/', passport.authenticate('login-kakao'));
-
-// [카카오톡-passport] 처리
-passport.use('login-kakao', new KakaoStrategy({
-        clientID: clientID,
-        callbackURL: callbackURL
-    },
-    function(accessToken, refreshToken, profile, done) {
-        console.log(profile);
-        return done(null, profile);
-    }
-));
+router.get('/login-kakao/', passport.authenticate('kakao'));
 
 // [카카오톡-passport callbackURL] 처리
-router.get('/kakao/', passport.authenticate('login-kakao', {
-    successRedirect: '/kakao/success/',
+router.get('/kakao/', passport.authenticate('kakao', {
     failureRedirect: '/kakao/failed/'
-}, (req, res) => {
-    console.log('callback from kakao');
-    console.log(req);
-}));
+}), (req, res) => {
+    console.log('-- kakao callback');
+    console.log(req.statusCode);
+    res.redirect('/api/auth/kakao/success');
+});
 
 // [카카오톡-passport callback] 처리
 router.get('/kakao/success/', (req, res) => {
     res.send('kakao success');
+    res.end();
 });
 
 router.get('/kakao/failed/', (req, res) => {
     res.send('kakao failed');
+    res.end();
 });
 
 

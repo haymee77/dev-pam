@@ -1,0 +1,18 @@
+
+extends layout
+
+block content
+    .timeline
+        form#join-form(action='/b/join/social-join' method='post')
+            .input-group
+                label(for='join-email') 이메일
+                input#join-email(type='email' name='email' value=email)
+            .input-group            
+                label(for='join-name') 이름
+                input#join-name(type='text' name='name')
+            .input-group            
+                label(for='join-nick') 별명
+                input#join-name(type='text' name='nick' value=nick)
+            if joinError
+                .error-message= joinError
+            button#join-btn(type='submit') 회원가입

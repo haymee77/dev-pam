@@ -10,19 +10,27 @@ router.post('/social-join', isLoggedIn, async (req, res, next) => {
     const { email, name, nick } = req.body;
     
     try {
-        const exUser = await User.find({ where: { email } });
+        const exUser = await User.findOne({ where: { email } });
         if (exUser) {
             req.flash('joinError', '이미 가입된 메일입니다.');
-            return res.redirect('/join');
+            return res.redirect('/b/join/social-join/');
         }
-     
-        res.redirect('/api/oauth/kakao/success');
         
+        res.redirect('/api/oauth/kakao/success');
+
     } catch (error) {
         console.error(error);
         return next(error);
     }
     
+});
+
+router.get('/social-join', isLoggedIn, (req, res) => {
+    res.render('pug/social-join', {
+        email: req.user.email,
+        nick: req.user.nick,
+        joinError: req.flash('joinError'),
+    });
 });
 
 module.exports = router;

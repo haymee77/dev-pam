@@ -14,8 +14,18 @@ router.post('/social-join', isLoggedIn, async (req, res, next) => {
         if (exUser) {
             req.flash('joinError', '이미 가입된 메일입니다.');
             return res.redirect('/b/join/social-join/');
-        }
+        } 
         
+        await User.update({
+            email,
+            name,
+            nick
+        }, {
+            where: {
+                id: req.user.id
+            }
+        });
+
         res.redirect('/api/oauth/kakao/success');
 
     } catch (error) {

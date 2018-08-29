@@ -13,6 +13,11 @@ module.exports = (sequelize, DataTypes) => (
             allowNull: true,
             unique: true,
         },
+        mobile: {
+            type: DataTypes.STRING(15),
+            allowNull: true,
+            unique: true,
+        },
         nick: {
             type: DataTypes.STRING(45),
             allowNull: true,

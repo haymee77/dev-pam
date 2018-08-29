@@ -11,9 +11,11 @@ const passport = require('passport');
 const express = require('express');
 require('dotenv').config();
 
-// router
+// API Router
 const apiRouter = require('./routes/api/api');
-const devRouter = require('./routes/dev');
+// API 외 Back단에서 처리하는 경우 Router
+const backRouter = require('./routes/back');
+
 const { sequelize } = require('./models');
 const passportConfig = require('./passport');
 
@@ -46,9 +48,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended : true }));
 
 app.use('/api', apiRouter);
-app.use('/_dev', devRouter);
+app.use('/b', backRouter);
 
-app.get("/", function(req, res) { // Router => Angular (Front-end)
+app.get("/*", function(req, res) { // Router => Angular (Front-end)
   res.sendFile(path.join(__dirname, "views/index.html"), function(err) {
     if (err) {
       res.status(500).send(err);
@@ -69,7 +71,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('pug/error');
 });
 
 module.exports = app;

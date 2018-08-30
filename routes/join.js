@@ -10,7 +10,7 @@ router.post('/social-join', isLoggedIn, async (req, res, next) => {
     const { email, name, nick } = req.body;
     
     try {
-        const exUser = await User.findOne({ where: { email } });
+        const exUser = await User.findOne({ where: { email, name } });
         if (exUser) {
             req.flash('joinError', '이미 가입된 메일입니다.');
             return res.redirect('/b/join/social-join/');

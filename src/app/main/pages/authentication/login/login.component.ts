@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   ) {
 
     this.app_key = 'a0abd437b44cfdbb646ee7805def69e8';
-    this.redirect_uri = encodeURI('http://127.0.0.1:3000/api/auth/kakao');
+    this.redirect_uri = encodeURI('http://127.0.0.1:3000/api/oauth/kakao');
 
     // Configure the layout
     this._fuseConfigService.config = {

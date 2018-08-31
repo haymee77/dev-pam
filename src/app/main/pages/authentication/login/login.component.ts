@@ -8,9 +8,9 @@ import { fuseAnimations } from '@fuse/animations';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: "login",
-  templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.scss"],
+  selector: 'login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
   animations: fuseAnimations
 })
 export class LoginComponent implements OnInit, OnDestroy {
@@ -72,8 +72,8 @@ export class LoginComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     this.loginForm = this._formBuilder.group({
-      email: ["", [Validators.required, Validators.email]],
-      password: ["", Validators.required]
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required]
     });
 
     this.loginForm.valueChanges
@@ -120,9 +120,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   onFormSubmit(formValue: any): void {
     // alert(JSON.stringify(formValue, null, 2));
     this._httpClient
-      .post("/api/users/", { name: formValue.email })
+      .post('/api/users/', { name: formValue.email })
       .subscribe((response: any) => {
-        alert("회원 추가완료");
+        alert('회원 추가완료');
       });
     // console.log(JSON.stringify(formValue.email, null, 2));
   }

@@ -9,6 +9,7 @@ const logger = require('morgan');
 const pug = require('pug');
 const flash = require('connect-flash');
 const passport = require('passport');
+const cors = require('cors');
 const express = require('express');
 require('dotenv').config();
 
@@ -27,6 +28,16 @@ passportConfig(passport);
 // view engine setup
 app.use(express.static(__dirname + "/views/"));
 app.set('view engine', 'pug');
+
+/**
+ * Setting up CORS, such that it can work together with an Application at another domain / port
+ * Angular port 허용
+ */
+app.use(cors({
+  origin: [
+    "http://localhost:4200"
+  ], credentials: true
+}));
 
 app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));

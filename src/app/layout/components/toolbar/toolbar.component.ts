@@ -9,176 +9,180 @@ import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
 import { navigation } from 'app/navigation/navigation';
+import { AuthService } from 'app/auth.service';
 
 @Component({
-    selector   : 'toolbar',
-    templateUrl: './toolbar.component.html',
-    styleUrls  : ['./toolbar.component.scss']
+  selector: 'toolbar',
+  templateUrl: './toolbar.component.html',
+  styleUrls: ['./toolbar.component.scss']
 })
+export class ToolbarComponent implements OnInit, OnDestroy {
+  horizontalNavbar: boolean;
+  rightNavbar: boolean;
+  hiddenNavbar: boolean;
+  languages: any;
+  user: any;
+  AuthService: any;
+  navigation: any;
+  selectedLanguage: any;
+  showLoadingBar: boolean;
+  userStatusOptions: any[];
 
-export class ToolbarComponent implements OnInit, OnDestroy
-{
-    horizontalNavbar: boolean;
-    rightNavbar: boolean;
-    hiddenNavbar: boolean;
-    languages: any;
-    navigation: any;
-    selectedLanguage: any;
-    showLoadingBar: boolean;
-    userStatusOptions: any[];
+  // Private
+  private _unsubscribeAll: Subject<any>;
 
-    // Private
-    private _unsubscribeAll: Subject<any>;
+  /**
+   * Constructor
+   *
+   * @param {FuseConfigService} _fuseConfigService
+   * @param {FuseSidebarService} _fuseSidebarService
+   * @param {Router} _router
+   * @param {TranslateService} _translateService
+   */
+  constructor(
+    private _fuseConfigService: FuseConfigService,
+    private _fuseSidebarService: FuseSidebarService,
+    private _router: Router,
+    private _translateService: TranslateService,
+    private _authService: AuthService
+  ) {
+    // Set the defaults
+    this.userStatusOptions = [
+      {
+        title: 'Online',
+        icon: 'icon-checkbox-marked-circle',
+        color: '#4CAF50'
+      },
+      {
+        title: 'Away',
+        icon: 'icon-clock',
+        color: '#FFC107'
+      },
+      {
+        title: 'Do not Disturb',
+        icon: 'icon-minus-circle',
+        color: '#F44336'
+      },
+      {
+        title: 'Invisible',
+        icon: 'icon-checkbox-blank-circle-outline',
+        color: '#BDBDBD'
+      },
+      {
+        title: 'Offline',
+        icon: 'icon-checkbox-blank-circle-outline',
+        color: '#616161'
+      }
+    ];
 
-    /**
-     * Constructor
-     *
-     * @param {FuseConfigService} _fuseConfigService
-     * @param {FuseSidebarService} _fuseSidebarService
-     * @param {Router} _router
-     * @param {TranslateService} _translateService
-     */
-    constructor(
-        private _fuseConfigService: FuseConfigService,
-        private _fuseSidebarService: FuseSidebarService,
-        private _router: Router,
-        private _translateService: TranslateService
-    )
-    {
-        // Set the defaults
-        this.userStatusOptions = [
-            {
-                'title': 'Online',
-                'icon' : 'icon-checkbox-marked-circle',
-                'color': '#4CAF50'
-            },
-            {
-                'title': 'Away',
-                'icon' : 'icon-clock',
-                'color': '#FFC107'
-            },
-            {
-                'title': 'Do not Disturb',
-                'icon' : 'icon-minus-circle',
-                'color': '#F44336'
-            },
-            {
-                'title': 'Invisible',
-                'icon' : 'icon-checkbox-blank-circle-outline',
-                'color': '#BDBDBD'
-            },
-            {
-                'title': 'Offline',
-                'icon' : 'icon-checkbox-blank-circle-outline',
-                'color': '#616161'
-            }
-        ];
+    this.languages = [
+      {
+        id: 'en',
+        title: 'English',
+        flag: 'us'
+      },
+      {
+        id: 'tr',
+        title: 'Turkish',
+        flag: 'tr'
+      }
+    ];
 
-        this.languages = [
-            {
-                id   : 'en',
-                title: 'English',
-                flag : 'us'
-            },
-            {
-                id   : 'tr',
-                title: 'Turkish',
-                flag : 'tr'
-            }
-        ];
+    this.user = {
+        'nick': null
+    };
 
-        this.navigation = navigation;
+    this._authService.isLogIn().subscribe(data => {
+        this.user = data.user;
+    });
 
-        // Set the private defaults
-        this._unsubscribeAll = new Subject();
-    }
+    this.navigation = navigation;
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
+    // Set the private defaults
+    this._unsubscribeAll = new Subject();
+  }
 
-    /**
-     * On init
-     */
-    ngOnInit(): void
-    {
-        // Subscribe to the router events to show/hide the loading bar
-        this._router.events
-            .pipe(
-                filter((event) => event instanceof NavigationStart),
-                takeUntil(this._unsubscribeAll)
-            )
-            .subscribe((event) => {
-                this.showLoadingBar = true;
-            });
+  // -----------------------------------------------------------------------------------------------------
+  // @ Lifecycle hooks
+  // -----------------------------------------------------------------------------------------------------
 
-        this._router.events
-            .pipe(
-                filter((event) => event instanceof NavigationEnd)
-            )
-            .subscribe((event) => {
-                this.showLoadingBar = false;
-            });
+  /**
+   * On init
+   */
+  ngOnInit(): void {
+    // Subscribe to the router events to show/hide the loading bar
+    this._router.events
+      .pipe(
+        filter(event => event instanceof NavigationStart),
+        takeUntil(this._unsubscribeAll)
+      )
+      .subscribe(event => {
+        this.showLoadingBar = true;
+      });
 
-        // Subscribe to the config changes
-        this._fuseConfigService.config
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((settings) => {
-                this.horizontalNavbar = settings.layout.navbar.position === 'top';
-                this.rightNavbar = settings.layout.navbar.position === 'right';
-                this.hiddenNavbar = settings.layout.navbar.hidden === true;
-            });
+    this._router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(event => {
+        this.showLoadingBar = false;
+      });
 
-        // Set the selected language from default languages
-        this.selectedLanguage = _.find(this.languages, {'id': this._translateService.currentLang});
-    }
+    // Subscribe to the config changes
+    this._fuseConfigService.config
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(settings => {
+        this.horizontalNavbar = settings.layout.navbar.position === 'top';
+        this.rightNavbar = settings.layout.navbar.position === 'right';
+        this.hiddenNavbar = settings.layout.navbar.hidden === true;
+      });
 
-    /**
-     * On destroy
-     */
-    ngOnDestroy(): void
-    {
-        // Unsubscribe from all subscriptions
-        this._unsubscribeAll.next();
-        this._unsubscribeAll.complete();
-    }
+    // Set the selected language from default languages
+    this.selectedLanguage = _.find(this.languages, {
+      id: this._translateService.currentLang
+    });
+  }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
+  /**
+   * On destroy
+   */
+  ngOnDestroy(): void {
+    // Unsubscribe from all subscriptions
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
+  }
 
-    /**
-     * Toggle sidebar open
-     *
-     * @param key
-     */
-    toggleSidebarOpen(key): void
-    {
-        this._fuseSidebarService.getSidebar(key).toggleOpen();
-    }
+  // -----------------------------------------------------------------------------------------------------
+  // @ Public methods
+  // -----------------------------------------------------------------------------------------------------
 
-    /**
-     * Search
-     *
-     * @param value
-     */
-    search(value): void
-    {
-        // Do your search here...
-        console.log(value);
-    }
+  /**
+   * Toggle sidebar open
+   *
+   * @param key
+   */
+  toggleSidebarOpen(key): void {
+    this._fuseSidebarService.getSidebar(key).toggleOpen();
+  }
 
-    /**
-     * Set the language
-     *
-     * @param langId
-     */
-    setLanguage(langId): void
-    {
-        // Set the selected language for toolbar
-        this.selectedLanguage = _.find(this.languages, {'id': langId});
+  /**
+   * Search
+   *
+   * @param value
+   */
+  search(value): void {
+    // Do your search here...
+    console.log(value);
+  }
 
-        // Use the selected language for translations
-        this._translateService.use(langId);
-    }
+  /**
+   * Set the language
+   *
+   * @param langId
+   */
+  setLanguage(langId): void {
+    // Set the selected language for toolbar
+    this.selectedLanguage = _.find(this.languages, { id: langId });
+
+    // Use the selected language for translations
+    this._translateService.use(langId);
+  }
 }

@@ -7,26 +7,23 @@ import { FuseSharedModule } from '@fuse/shared.module';
 
 import { ToolbarComponent } from 'app/layout/components/toolbar/toolbar.component';
 
-@NgModule({
-    declarations: [
-        ToolbarComponent
-    ],
-    imports     : [
-        RouterModule,
-        MatButtonModule,
-        MatIconModule,
-        MatMenuModule,
-        MatProgressBarModule,
-        MatToolbarModule,
+import { AuthService } from 'app/auth.service';
 
-        FuseSharedModule,
-        FuseSearchBarModule,
-        FuseShortcutsModule
-    ],
-    exports     : [
-        ToolbarComponent
-    ]
+@NgModule({
+  declarations: [ToolbarComponent],
+  imports: [
+    RouterModule,
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule,
+    MatProgressBarModule,
+    MatToolbarModule,
+
+    FuseSharedModule,
+    FuseSearchBarModule,
+    FuseShortcutsModule
+  ],
+  providers: [AuthService],
+  exports: [ToolbarComponent]
 })
-export class ToolbarModule
-{
-}
+export class ToolbarModule {}

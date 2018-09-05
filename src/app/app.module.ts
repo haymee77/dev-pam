@@ -20,6 +20,8 @@ import { AppComponent } from 'app/app.component';
 import { AppStoreModule } from 'app/store/store.module';
 import { LayoutModule } from 'app/layout/layout.module';
 
+import { AuthService } from './auth.service';
+
 const appRoutes: Routes = [
     {
         path        : 'apps',
@@ -48,42 +50,37 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-    declarations: [
-        AppComponent
-    ],
-    imports     : [
-        BrowserModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        RouterModule.forRoot(appRoutes),
+  declarations: [AppComponent],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    RouterModule.forRoot(appRoutes),
 
-        TranslateModule.forRoot(),
-        InMemoryWebApiModule.forRoot(FakeDbService, {
-            delay             : 0,
-            passThruUnknownUrl: true
-        }),
+    TranslateModule.forRoot(),
+    InMemoryWebApiModule.forRoot(FakeDbService, {
+      delay: 0,
+      passThruUnknownUrl: true
+    }),
 
-        // Material moment date module
-        MatMomentDateModule,
+    // Material moment date module
+    MatMomentDateModule,
 
-        // Material
-        MatButtonModule,
-        MatIconModule,
+    // Material
+    MatButtonModule,
+    MatIconModule,
 
-        // Fuse modules
-        FuseModule.forRoot(fuseConfig),
-        FuseSharedModule,
-        FuseSidebarModule,
-        FuseThemeOptionsModule,
+    // Fuse modules
+    FuseModule.forRoot(fuseConfig),
+    FuseSharedModule,
+    FuseSidebarModule,
+    FuseThemeOptionsModule,
 
-        // App modules
-        LayoutModule,
-        AppStoreModule
-    ],
-    bootstrap   : [
-        AppComponent
-    ]
+    // App modules
+    LayoutModule,
+    AppStoreModule
+  ],
+  providers: [AuthService],
+  bootstrap: [AppComponent]
 })
-export class AppModule
-{
-}
+export class AppModule {}

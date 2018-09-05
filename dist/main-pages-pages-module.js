@@ -887,7 +887,7 @@ var LoginComponent = /** @class */ (function () {
         this._formBuilder = _formBuilder;
         this._httpClient = _httpClient;
         this.app_key = 'a0abd437b44cfdbb646ee7805def69e8';
-        this.redirect_uri = encodeURI('http://127.0.0.1:3000/api/oauth/kakao');
+        this.redirect_uri = encodeURI('http://127.0.0.1:3000/api/oauth/kakao/');
         // Configure the layout
         this._fuseConfigService.config = {
             layout: {
@@ -919,8 +919,8 @@ var LoginComponent = /** @class */ (function () {
     LoginComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.loginForm = this._formBuilder.group({
-            email: ["", [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].email]],
-            password: ["", _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]
+            email: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].email]],
+            password: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]
         });
         this.loginForm.valueChanges
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(this._unsubscribeAll))
@@ -959,15 +959,15 @@ var LoginComponent = /** @class */ (function () {
     LoginComponent.prototype.onFormSubmit = function (formValue) {
         // alert(JSON.stringify(formValue, null, 2));
         this._httpClient
-            .post("/api/users/", { name: formValue.email })
+            .post('/api/users/', { name: formValue.email })
             .subscribe(function (response) {
-            alert("회원 추가완료");
+            alert('회원 추가완료');
         });
         // console.log(JSON.stringify(formValue.email, null, 2));
     };
     LoginComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: "login",
+            selector: 'login',
             template: __webpack_require__(/*! ./login.component.html */ "./src/app/main/pages/authentication/login/login.component.html"),
             styles: [__webpack_require__(/*! ./login.component.scss */ "./src/app/main/pages/authentication/login/login.component.scss")],
             animations: _fuse_animations__WEBPACK_IMPORTED_MODULE_5__["fuseAnimations"]

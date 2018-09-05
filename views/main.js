@@ -7611,12 +7611,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var app_app_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! app/app.component */ "./src/app/app.component.ts");
 /* harmony import */ var app_store_store_module__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! app/store/store.module */ "./src/app/store/store.module.ts");
 /* harmony import */ var app_layout_layout_module__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! app/layout/layout.module */ "./src/app/layout/layout.module.ts");
+/* harmony import */ var _auth_service__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./auth.service */ "./src/app/auth.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -7666,9 +7668,7 @@ var AppModule = /** @class */ (function () {
     }
     AppModule = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
-            declarations: [
-                app_app_component__WEBPACK_IMPORTED_MODULE_15__["AppComponent"]
-            ],
+            declarations: [app_app_component__WEBPACK_IMPORTED_MODULE_15__["AppComponent"]],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"],
                 _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_3__["BrowserAnimationsModule"],
@@ -7693,12 +7693,60 @@ var AppModule = /** @class */ (function () {
                 app_layout_layout_module__WEBPACK_IMPORTED_MODULE_17__["LayoutModule"],
                 app_store_store_module__WEBPACK_IMPORTED_MODULE_16__["AppStoreModule"]
             ],
-            bootstrap: [
-                app_app_component__WEBPACK_IMPORTED_MODULE_15__["AppComponent"]
-            ]
+            providers: [_auth_service__WEBPACK_IMPORTED_MODULE_18__["AuthService"]],
+            bootstrap: [app_app_component__WEBPACK_IMPORTED_MODULE_15__["AppComponent"]]
         })
     ], AppModule);
     return AppModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/auth.service.ts":
+/*!*********************************!*\
+  !*** ./src/app/auth.service.ts ***!
+  \*********************************/
+/*! exports provided: AuthService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthService", function() { return AuthService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var AuthService = /** @class */ (function () {
+    /**
+     * Constructor
+     *
+     * @param {HttpClient} _httpClient
+     */
+    function AuthService(_httpClient) {
+        this._httpClient = _httpClient;
+        // Set the defaults
+    }
+    AuthService.prototype.isLogIn = function () {
+        return this._httpClient.get('api/oauth/check');
+    };
+    AuthService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+    ], AuthService);
+    return AuthService;
 }());
 
 
@@ -20154,7 +20202,7 @@ var QuickPanelModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-toolbar class=\"p-0 mat-elevation-z1\">\n\n    <mat-progress-bar *ngIf=\"showLoadingBar\" class=\"loading-bar\" color=\"accent\" mode=\"indeterminate\"></mat-progress-bar>\n\n    <div fxFlex fxFill fxLayout=\"row\" fxLayoutAlign=\"start center\">\n\n        <div fxFlex=\"1 0 auto\" fxLayout=\"row\" fxLayoutAlign=\"start center\">\n\n            <button mat-icon-button class=\"navbar-toggle-button\"\n                    *ngIf=\"!hiddenNavbar && !rightNavbar\" (click)=\"toggleSidebarOpen('navbar')\" fxHide.gt-md>\n                <mat-icon class=\"secondary-text\">menu</mat-icon>\n            </button>\n\n            <div class=\"toolbar-separator\" *ngIf=\"!hiddenNavbar && !rightNavbar\" fxHide.gt-md></div>\n\n            <div fxLayout=\"row\" fxLayoutAlign=\"start center\" *ngIf=\"horizontalNavbar\">\n                <div class=\"logo ml-16\">\n                    <img class=\"logo-icon\" src=\"assets/images/logos/fuse.svg\">\n                </div>\n            </div>\n\n            <div class=\"px-8 px-mat-16\">\n                <fuse-shortcuts [navigation]=\"navigation\"></fuse-shortcuts>\n            </div>\n\n        </div>\n\n        <div class=\"\" fxFlex=\"0 1 auto\" fxLayout=\"row\" fxLayoutAlign=\"start center\">\n\n            <button mat-button [matMenuTriggerFor]=\"userMenu\"\n                    class=\"user-button\">\n                <div fxLayout=\"row\" fxLayoutAlign=\"center center\">\n                    <img class=\"avatar\" src=\"assets/images/avatars/profile.jpg\">\n                    <span class=\"username mr-12\" fxHide fxShow.gt-sm>John Doe</span>\n                    <mat-icon class=\"s-16\" fxHide.xs>keyboard_arrow_down</mat-icon>\n                </div>\n            </button>\n\n            <mat-menu #userMenu=\"matMenu\" [overlapTrigger]=\"false\">\n\n                <button mat-menu-item>\n                    <mat-icon>account_circle</mat-icon>\n                    <span>My Profile</span>\n                </button>\n\n                <button mat-menu-item class=\"\">\n                    <mat-icon>mail</mat-icon>\n                    <span>Inbox</span>\n                </button>\n\n                <button mat-menu-item class=\"\">\n                    <mat-icon>exit_to_app</mat-icon>\n                    <span>Logout</span>\n                </button>\n\n            </mat-menu>\n\n            <div class=\"toolbar-separator\"></div>\n\n            <fuse-search-bar (input)=\"search($event)\"></fuse-search-bar>\n\n            <div class=\"toolbar-separator\"></div>\n\n            <button mat-button fxHide fxShow.gt-xs\n                    class=\"language-button\"\n                    [matMenuTriggerFor]=\"languageMenu\">\n                <div fxLayout=\"row\" fxLayoutAlign=\"center center\">\n                    <img class=\"flag mr-8\" [src]=\"'assets/images/flags/'+selectedLanguage.flag+'.png'\">\n                    <span class=\"iso text-uppercase\">{{selectedLanguage.id}}</span>\n                </div>\n            </button>\n\n            <mat-menu #languageMenu=\"matMenu\" [overlapTrigger]=\"false\">\n\n                <button mat-menu-item *ngFor=\"let lang of languages\" (click)=\"setLanguage(lang.id)\">\n                    <span fxLayout=\"row\" fxLayoutAlign=\"start center\">\n                        <img class=\"flag mr-16\" [src]=\"'assets/images/flags/'+lang.flag+'.png'\">\n                        <span class=\"iso\">{{lang.title}}</span>\n                    </span>\n                </button>\n\n                <button mat-menu-item [routerLink]=\"'/components/multi-language'\">\n                    <div fxLayout=\"row\" fxLayoutAlign=\"start center\">\n                        <span>Learn more</span>\n                    </div>\n                </button>\n\n            </mat-menu>\n\n            <div class=\"toolbar-separator\" fxHide fxShow.gt-xs></div>\n\n            <!-- <button mat-icon-button\n                    class=\"quick-panel-toggle-button\"\n                    (click)=\"toggleSidebarOpen('quickPanel')\"\n                    aria-label=\"Toggle quick panel\">\n                <mat-icon class=\"icon\">format_list_bulleted</mat-icon>\n            </button> -->\n\n            <div class=\"toolbar-separator\" *ngIf=\"!hiddenNavbar && rightNavbar\" fxHide fxShow.gt-xs></div>\n\n            <button mat-icon-button class=\"navbar-toggle-button\"\n                    *ngIf=\"!hiddenNavbar && rightNavbar\" (click)=\"toggleSidebarOpen('navbar')\" fxHide.gt-md>\n                <mat-icon class=\"secondary-text\">menu</mat-icon>\n            </button>\n\n        </div>\n\n    </div>\n\n</mat-toolbar>\n"
+module.exports = "<mat-toolbar class=\"p-0 mat-elevation-z1\">\n\n    <mat-progress-bar *ngIf=\"showLoadingBar\" class=\"loading-bar\" color=\"accent\" mode=\"indeterminate\"></mat-progress-bar>\n\n    <div fxFlex fxFill fxLayout=\"row\" fxLayoutAlign=\"start center\">\n\n        <div fxFlex=\"1 0 auto\" fxLayout=\"row\" fxLayoutAlign=\"start center\">\n\n            <button mat-icon-button class=\"navbar-toggle-button\"\n                    *ngIf=\"!hiddenNavbar && !rightNavbar\" (click)=\"toggleSidebarOpen('navbar')\" fxHide.gt-md>\n                <mat-icon class=\"secondary-text\">menu</mat-icon>\n            </button>\n\n            <div class=\"toolbar-separator\" *ngIf=\"!hiddenNavbar && !rightNavbar\" fxHide.gt-md></div>\n\n            <div fxLayout=\"row\" fxLayoutAlign=\"start center\" *ngIf=\"horizontalNavbar\">\n                <div class=\"logo ml-16\">\n                    <img class=\"logo-icon\" src=\"assets/images/logos/fuse.svg\">\n                </div>\n            </div>\n\n            <div class=\"px-8 px-mat-16\">\n                <fuse-shortcuts [navigation]=\"navigation\"></fuse-shortcuts>\n            </div>\n\n        </div>\n\n        <div class=\"\" fxFlex=\"0 1 auto\" fxLayout=\"row\" fxLayoutAlign=\"start center\">\n\n            <button mat-button [matMenuTriggerFor]=\"userMenu\"\n                    class=\"user-button\">\n                <div fxLayout=\"row\" fxLayoutAlign=\"center center\">\n                    <img class=\"avatar\" src=\"assets/images/avatars/profile.jpg\">\n                    <span class=\"username mr-12\" fxHide fxShow.gt-sm>{{ user.nick }}</span>\n                    <mat-icon class=\"s-16\" fxHide.xs>keyboard_arrow_down</mat-icon>\n                </div>\n            </button>\n\n            <mat-menu #userMenu=\"matMenu\" [overlapTrigger]=\"false\">\n\n                <button mat-menu-item>\n                    <mat-icon>account_circle</mat-icon>\n                    <span>My Profile</span>\n                </button>\n\n                <button mat-menu-item class=\"\">\n                    <mat-icon>mail</mat-icon>\n                    <span>Inbox</span>\n                </button>\n\n                <button mat-menu-item class=\"\">\n                    <mat-icon>exit_to_app</mat-icon>\n                    <span>Logout</span>\n                </button>\n\n            </mat-menu>\n\n            <div class=\"toolbar-separator\"></div>\n\n            <fuse-search-bar (input)=\"search($event)\"></fuse-search-bar>\n\n            <div class=\"toolbar-separator\"></div>\n\n            <button mat-button fxHide fxShow.gt-xs\n                    class=\"language-button\"\n                    [matMenuTriggerFor]=\"languageMenu\">\n                <div fxLayout=\"row\" fxLayoutAlign=\"center center\">\n                    <img class=\"flag mr-8\" [src]=\"'assets/images/flags/'+selectedLanguage.flag+'.png'\">\n                    <span class=\"iso text-uppercase\">{{selectedLanguage.id}}</span>\n                </div>\n            </button>\n\n            <mat-menu #languageMenu=\"matMenu\" [overlapTrigger]=\"false\">\n\n                <button mat-menu-item *ngFor=\"let lang of languages\" (click)=\"setLanguage(lang.id)\">\n                    <span fxLayout=\"row\" fxLayoutAlign=\"start center\">\n                        <img class=\"flag mr-16\" [src]=\"'assets/images/flags/'+lang.flag+'.png'\">\n                        <span class=\"iso\">{{lang.title}}</span>\n                    </span>\n                </button>\n\n                <button mat-menu-item [routerLink]=\"'/components/multi-language'\">\n                    <div fxLayout=\"row\" fxLayoutAlign=\"start center\">\n                        <span>Learn more</span>\n                    </div>\n                </button>\n\n            </mat-menu>\n\n            <div class=\"toolbar-separator\" fxHide fxShow.gt-xs></div>\n\n            <!-- <button mat-icon-button\n                    class=\"quick-panel-toggle-button\"\n                    (click)=\"toggleSidebarOpen('quickPanel')\"\n                    aria-label=\"Toggle quick panel\">\n                <mat-icon class=\"icon\">format_list_bulleted</mat-icon>\n            </button> -->\n\n            <div class=\"toolbar-separator\" *ngIf=\"!hiddenNavbar && rightNavbar\" fxHide fxShow.gt-xs></div>\n\n            <button mat-icon-button class=\"navbar-toggle-button\"\n                    *ngIf=\"!hiddenNavbar && rightNavbar\" (click)=\"toggleSidebarOpen('navbar')\" fxHide.gt-md>\n                <mat-icon class=\"secondary-text\">menu</mat-icon>\n            </button>\n\n        </div>\n\n    </div>\n\n</mat-toolbar>\n"
 
 /***/ }),
 
@@ -20189,6 +20237,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _fuse_services_config_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @fuse/services/config.service */ "./src/@fuse/services/config.service.ts");
 /* harmony import */ var _fuse_components_sidebar_sidebar_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @fuse/components/sidebar/sidebar.service */ "./src/@fuse/components/sidebar/sidebar.service.ts");
 /* harmony import */ var app_navigation_navigation__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! app/navigation/navigation */ "./src/app/navigation/navigation.ts");
+/* harmony import */ var app_auth_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! app/auth.service */ "./src/app/auth.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -20207,6 +20256,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var ToolbarComponent = /** @class */ (function () {
     /**
      * Constructor
@@ -20216,37 +20266,39 @@ var ToolbarComponent = /** @class */ (function () {
      * @param {Router} _router
      * @param {TranslateService} _translateService
      */
-    function ToolbarComponent(_fuseConfigService, _fuseSidebarService, _router, _translateService) {
+    function ToolbarComponent(_fuseConfigService, _fuseSidebarService, _router, _translateService, _authService) {
+        var _this = this;
         this._fuseConfigService = _fuseConfigService;
         this._fuseSidebarService = _fuseSidebarService;
         this._router = _router;
         this._translateService = _translateService;
+        this._authService = _authService;
         // Set the defaults
         this.userStatusOptions = [
             {
-                'title': 'Online',
-                'icon': 'icon-checkbox-marked-circle',
-                'color': '#4CAF50'
+                title: 'Online',
+                icon: 'icon-checkbox-marked-circle',
+                color: '#4CAF50'
             },
             {
-                'title': 'Away',
-                'icon': 'icon-clock',
-                'color': '#FFC107'
+                title: 'Away',
+                icon: 'icon-clock',
+                color: '#FFC107'
             },
             {
-                'title': 'Do not Disturb',
-                'icon': 'icon-minus-circle',
-                'color': '#F44336'
+                title: 'Do not Disturb',
+                icon: 'icon-minus-circle',
+                color: '#F44336'
             },
             {
-                'title': 'Invisible',
-                'icon': 'icon-checkbox-blank-circle-outline',
-                'color': '#BDBDBD'
+                title: 'Invisible',
+                icon: 'icon-checkbox-blank-circle-outline',
+                color: '#BDBDBD'
             },
             {
-                'title': 'Offline',
-                'icon': 'icon-checkbox-blank-circle-outline',
-                'color': '#616161'
+                title: 'Offline',
+                icon: 'icon-checkbox-blank-circle-outline',
+                color: '#616161'
             }
         ];
         this.languages = [
@@ -20261,6 +20313,12 @@ var ToolbarComponent = /** @class */ (function () {
                 flag: 'tr'
             }
         ];
+        this.user = {
+            'nick': null
+        };
+        this._authService.isLogIn().subscribe(function (data) {
+            _this.user = data.user;
+        });
         this.navigation = app_navigation_navigation__WEBPACK_IMPORTED_MODULE_8__["navigation"];
         // Set the private defaults
         this._unsubscribeAll = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Subject"]();
@@ -20293,7 +20351,9 @@ var ToolbarComponent = /** @class */ (function () {
             _this.hiddenNavbar = settings.layout.navbar.hidden === true;
         });
         // Set the selected language from default languages
-        this.selectedLanguage = lodash__WEBPACK_IMPORTED_MODULE_5__["find"](this.languages, { 'id': this._translateService.currentLang });
+        this.selectedLanguage = lodash__WEBPACK_IMPORTED_MODULE_5__["find"](this.languages, {
+            id: this._translateService.currentLang
+        });
     };
     /**
      * On destroy
@@ -20330,7 +20390,7 @@ var ToolbarComponent = /** @class */ (function () {
      */
     ToolbarComponent.prototype.setLanguage = function (langId) {
         // Set the selected language for toolbar
-        this.selectedLanguage = lodash__WEBPACK_IMPORTED_MODULE_5__["find"](this.languages, { 'id': langId });
+        this.selectedLanguage = lodash__WEBPACK_IMPORTED_MODULE_5__["find"](this.languages, { id: langId });
         // Use the selected language for translations
         this._translateService.use(langId);
     };
@@ -20343,7 +20403,8 @@ var ToolbarComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [_fuse_services_config_service__WEBPACK_IMPORTED_MODULE_6__["FuseConfigService"],
             _fuse_components_sidebar_sidebar_service__WEBPACK_IMPORTED_MODULE_7__["FuseSidebarService"],
             _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"],
-            _ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__["TranslateService"]])
+            _ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__["TranslateService"],
+            app_auth_service__WEBPACK_IMPORTED_MODULE_9__["AuthService"]])
     ], ToolbarComponent);
     return ToolbarComponent;
 }());
@@ -20368,6 +20429,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _fuse_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fuse/components */ "./src/@fuse/components/index.ts");
 /* harmony import */ var _fuse_shared_module__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fuse/shared.module */ "./src/@fuse/shared.module.ts");
 /* harmony import */ var app_layout_components_toolbar_toolbar_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! app/layout/components/toolbar/toolbar.component */ "./src/app/layout/components/toolbar/toolbar.component.ts");
+/* harmony import */ var app_auth_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! app/auth.service */ "./src/app/auth.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -20380,14 +20442,13 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
 var ToolbarModule = /** @class */ (function () {
     function ToolbarModule() {
     }
     ToolbarModule = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
-            declarations: [
-                app_layout_components_toolbar_toolbar_component__WEBPACK_IMPORTED_MODULE_5__["ToolbarComponent"]
-            ],
+            declarations: [app_layout_components_toolbar_toolbar_component__WEBPACK_IMPORTED_MODULE_5__["ToolbarComponent"]],
             imports: [
                 _angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterModule"],
                 _angular_material__WEBPACK_IMPORTED_MODULE_2__["MatButtonModule"],
@@ -20399,9 +20460,8 @@ var ToolbarModule = /** @class */ (function () {
                 _fuse_components__WEBPACK_IMPORTED_MODULE_3__["FuseSearchBarModule"],
                 _fuse_components__WEBPACK_IMPORTED_MODULE_3__["FuseShortcutsModule"]
             ],
-            exports: [
-                app_layout_components_toolbar_toolbar_component__WEBPACK_IMPORTED_MODULE_5__["ToolbarComponent"]
-            ]
+            providers: [app_auth_service__WEBPACK_IMPORTED_MODULE_6__["AuthService"]],
+            exports: [app_layout_components_toolbar_toolbar_component__WEBPACK_IMPORTED_MODULE_5__["ToolbarComponent"]]
         })
     ], ToolbarModule);
     return ToolbarModule;

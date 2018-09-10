@@ -1,4 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, QueryList, ViewChildren, ViewEncapsulation } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -21,6 +22,7 @@ export class AcademyCourseComponent implements OnInit, OnDestroy, AfterViewInit
     course: any;
     courseStepContent: any;
     currentStep: number;
+    step1Contents: any;
 
     @ViewChildren(FusePerfectScrollbarDirective)
     fuseScrollbarDirectives: QueryList<FusePerfectScrollbarDirective>;
@@ -38,7 +40,8 @@ export class AcademyCourseComponent implements OnInit, OnDestroy, AfterViewInit
     constructor(
         private _academyCourseService: AcademyCourseService,
         private _changeDetectorRef: ChangeDetectorRef,
-        private _fuseSidebarService: FuseSidebarService
+        private _fuseSidebarService: FuseSidebarService,
+        private _httpClient: HttpClient
     )
     {
         // Set the defaults
@@ -62,7 +65,23 @@ export class AcademyCourseComponent implements OnInit, OnDestroy, AfterViewInit
         this._academyCourseService.onCourseChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(course => {
-                this.course = course;
+
+                this.course = course[0];
+                // this.getContent(this.course.step1_type).subscribe(data => {
+                //     console.log(data);
+                //     this.step1Contents = data;
+                // });
+                this.course.steps = [
+                    { title: this.course.step1_type, content: this.step1Contents },
+                    {
+                        title: this.course.step2_type, content: this.getContent(this.course.step2_type).subscribe(
+                            (data) => this.step1Contents = { ...data }, // success path
+                            // error => this.error = error // error path
+                        ) },
+                    { title: this.course.step3_type, content: this.getContent(this.course.step3_type) }
+                ];
+                console.log(this.step1Contents);
+                console.log(this.getContent(this.course.step2_type));
             });
     }
 
@@ -158,5 +177,20 @@ export class AcademyCourseComponent implements OnInit, OnDestroy, AfterViewInit
     toggleSidebar(name): void
     {
         this._fuseSidebarService.getSidebar(name).toggleOpen();
+    }
+
+    // getContent(step): Promise<any> {
+    //     return new Promise((resolve, reject) => {
+    //         this._httpClient
+    //             .get('http://127.0.0.1:3000/api/courses/steps/' + step)
+    //             .subscribe((response: any) => {
+    //                 resolve(response);
+    //             }, reject);
+    //     });
+    // }
+
+    getContent(step): any {
+        return this._httpClient
+            .get('http://127.0.0.1:3000/api/courses/steps/' + step);
     }
 }

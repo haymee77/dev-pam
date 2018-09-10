@@ -58,11 +58,14 @@ export class AcademyCoursesService implements Resolve<any>
     getCategories(): Promise<any>
     {
         return new Promise((resolve, reject) => {
-            this._httpClient.get('api/academy-categories')
-                .subscribe((response: any) => {
-                    this.onCategoriesChanged.next(response);
-                    resolve(response);
-                }, reject);
+            this._httpClient
+            //   .get("api/academy-categories")
+              .get('http://127.0.0.1:3000/api/courses')
+              .subscribe((response: any) => {
+                this.onCategoriesChanged.next(response);
+                resolve(response);
+                // console.log(response);
+              }, reject);
         });
     }
 
@@ -74,11 +77,13 @@ export class AcademyCoursesService implements Resolve<any>
     getCourses(): Promise<any>
     {
         return new Promise((resolve, reject) => {
-            this._httpClient.get('api/academy-courses')
-                .subscribe((response: any) => {
-                    this.onCoursesChanged.next(response);
-                    resolve(response);
-                }, reject);
+            this._httpClient
+              // .get('api/academy-courses')
+              .get('http://127.0.0.1:3000/api/courses')
+              .subscribe((response: any) => {
+                this.onCoursesChanged.next(response);
+                resolve(response);
+              }, reject);
         });
     }
 

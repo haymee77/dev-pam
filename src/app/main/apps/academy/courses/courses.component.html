@@ -59,24 +59,25 @@
                              [ngClass]="course.category + '-bg'">
 
                             <div class="category" fxFlex>
-                                {{course.category}}
+                                Lv {{course.level}}
                             </div>
 
                             <div class="length" fxLayout="row" fxLayoutAlign="center center">
                                 <mat-icon class="length-icon s-20">access_time</mat-icon>
-                                <div class="min">{{course.length}} min</div>
+                                <div class="min">80 min</div>
                             </div>
 
                         </div>
 
                         <div class="content" fxLayout="column" fxLayoutAlign="center center" fxFlex>
-                            <div class="h1">{{course.title}}</div>
-                            <div class="updated">Updated {{course.updated}}</div>
+                            <div class="h1">{{course.name}}</div>
+                            <div class="updated">time: {{course.timetable.time}}</div>
+                            <div class="updated">Date: {{course.timetable.date}}</div>
                         </div>
 
                         <div class="footer" fxLayout="row" fxLayoutAlign="center center">
                             <button mat-button color="accent"
-                                    [routerLink]="'/apps/academy/courses/' + course.id + '/' + course.slug">
+                                    [routerLink]="'/apps/academy/courses/' + course.uid + '/' + course.uid">
                                 START
                             </button>
                         </div>

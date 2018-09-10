@@ -18,7 +18,7 @@ export class AuthService {
   }
 
   isLogIn(): any {
-    return this._httpClient.get('api/oauth/check');
+    return this._httpClient.get('http://127.0.0.1:3000/api/oauth/check');
   }
 
 }

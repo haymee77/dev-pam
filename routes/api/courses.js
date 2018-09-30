@@ -9,4 +9,6 @@ router.get("/:id", controller.show);
 
 router.get("/steps/:id", controller.showContent);
 
+router.get("/steps/examples/:id", controller.showContentExample);
+
 module.exports = router;

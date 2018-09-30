@@ -1,7 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule } from '@angular/material';
+import {
+  MatButtonModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule,
+  MatSelectModule,
+  MatTableModule,
+  MatTabsModule,
+  MatDividerModule,
+  MatExpansionModule
+} from '@angular/material';
 
 import { FuseSharedModule } from '@fuse/shared.module';
 
@@ -10,6 +20,8 @@ import { AcademyCourseComponent } from 'app/main/apps/academy/course/course.comp
 import { AcademyCoursesService } from 'app/main/apps/academy/courses.service';
 import { AcademyCourseService } from 'app/main/apps/academy/course.service';
 import { FuseSidebarModule } from '@fuse/components';
+
+import { FuseWidgetModule } from '@fuse/components/widget/widget.module';
 
 const routes = [
     {
@@ -33,27 +45,24 @@ const routes = [
 ];
 
 @NgModule({
-    declarations: [
-        AcademyCoursesComponent,
-        AcademyCourseComponent
-    ],
-    imports     : [
-        RouterModule.forChild(routes),
+  declarations: [AcademyCoursesComponent, AcademyCourseComponent],
+  imports: [
+    RouterModule.forChild(routes),
 
-        MatButtonModule,
-        MatFormFieldModule,
-        MatIconModule,
-        MatInputModule,
-        MatSelectModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatSelectModule,
+    MatTableModule,
+    MatTabsModule,
+    MatDividerModule,
+    MatExpansionModule,
 
-        FuseSharedModule,
-        FuseSidebarModule
-    ],
-    providers   : [
-        AcademyCoursesService,
-        AcademyCourseService
-    ]
+    FuseSharedModule,
+    FuseSidebarModule,
+    FuseWidgetModule
+  ],
+  providers: [AcademyCoursesService, AcademyCourseService]
 })
-export class AcademyModule
-{
-}
+export class AcademyModule {}

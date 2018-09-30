@@ -57,7 +57,90 @@
                      *ngIf="currentStep === i"
                      [@slideIn]="animationDirection">
 
-                    <div id="course-step-content" class="course-step-content" [innerHTML]="step.content"></div>
+                    <div id="course-step-content" class="course-step-content">
+                        <div class="contents_top_title" fxLayout="row">
+                            <mat-icon svgIcon="record_voice_over" class="svg_top"></mat-icon> Today's {{ step.title }}
+                        </div>
+                        <div *ngIf="step.title == 'WORD'">
+                            <div *ngFor="let contents of step.content; let i=index">
+                                <div *ngIf="i < 10">
+                                    <!-- {{ contents.word }} : {{ contents.definition }} -->
+                                    <fuse-widget [@animate]="{value:'*',params:{y:'100%'}}" class="p-1">
+                                    
+                                        <!-- Front -->
+                                        <div class="fuse-widget-front mat-white-bg mat-elevation-z2">
+                                            <div class="pl-16 pr-8 py-16 h-52" fxLayout="row" fxLayoutAlign="space-between center">
+                                    
+                                                <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button pam_word_tag" aria-label="Flip widget">
+                                                    <mat-icon class="s-16">event_note</mat-icon>
+                                                </button>
+                                                
+                                            </div>
+                                    
+                                            <div class="pt-8 pb-32 font-size-28" fxLayout="column" fxLayoutAlign="center center">
+                                                {{ contents.word }}
+                                            </div>
+
+                                            <div class="p-16 grey-50-bg border-top" fxlayout="row" fxlayoutalign="start center" ng-reflect-layout="row" ng-reflect-align="start center"
+                                                style="flex-direction: row; box-sizing: border-box; display: flex; max-height: 100%; align-content: center; align-items: center; justify-content: flex-start;">
+                                                <span class="h4 secondary-text">Example</span>
+                                                <span class="h4 ml-8">{{ contents.expression }}</span>
+                                            </div>
+                                        </div>
+                                        <!-- / Front -->
+                                    
+                                        <!-- Back -->
+                                        <div class="fuse-widget-back p-16 pt-32 mat-white-bg mat-elevation-z2" fxLayout="column" fxLayoutAlign="center center">
+                                            <button mat-icon-button fuseWidgetToggle class="fuse-widget-flip-button" aria-label="Flip widget">
+                                                <mat-icon class="s-16">close</mat-icon>
+                                            </button>
+                                    
+                                            <div class="pt-8 pb-32 font-size-28" fxLayout="column" fxLayoutAlign="center center">
+                                                {{ contents.word }} : {{ contents.definition }}
+                                            </div>
+                                        </div>
+                                        <!-- / Back -->
+                                    
+                                    </fuse-widget>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="step.title == 'SPEECH'" class="speech_content_wrap">
+                            <div *ngFor="let contents of step.content; let i=index" class="speech_content">
+                                <div *ngIf="i < 5">
+                                    <span class="speech_content_index">0{{ i+1 }}. </span>{{ contents.topic }}
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="step.title == 'DEBATE'" class="debate_content_wrap">
+                            <div *ngFor="let contents of step.content; let i=index">
+                                <!-- <div *ngIf="i < 1"> -->
+                                    <div *ngIf="i == 0" class="debate_content_intro">
+                                        {{ contents.summary }}
+                                    </div>
+                                    <div *ngIf="contents.opinion_st == 'A'">
+                                        <mat-expansion-panel>
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title flex fxLayout="row" fxLayoutAlign="start center">
+                                                    PROS {{ (i + 2) / 2 }}
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+                                            {{ contents.opinion }}
+                                        </mat-expansion-panel>
+                                    </div>
+                                    <div *ngIf="contents.opinion_st == 'B'">
+                                        <mat-expansion-panel>
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title flex fxLayout="row" fxLayoutAlign="start center">
+                                                    CONS {{ (i + 1) / 2 }}
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+                                            {{ contents.opinion }}
+                                        </mat-expansion-panel>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
 

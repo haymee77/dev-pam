@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) =>
   sequelize.define(
-    "CLASSES_TB",
+    "CLASSES_TB_b",
     {
       uid: {
         type: DataTypes.INTEGER(11),
